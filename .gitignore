@@ -1,0 +1,8 @@
+/cmake-build-*/
+/server_logs/
+/build/
+
+*.log
+*.json
+.idea
+.git
