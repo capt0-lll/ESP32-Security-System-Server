@@ -3,8 +3,8 @@ project(security_system_back_end)
 
 set(CMAKE_CXX_STANDARD 26)
 
-add_executable(security_system_back_end src/main.cpp src/json_reader/json_reader.cpp
-        src/server/tcp_server.cpp
+add_executable(security_system_back_end src/main.cpp src/json_reader/jsonReader.cpp
+        src/server/serverTCP.cpp
         src/server/Logger.cpp
         src/licenseInfo/licenseInfo.h
         src/licenseInfo/licenseInfo.cpp

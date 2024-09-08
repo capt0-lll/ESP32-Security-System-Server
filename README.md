@@ -71,7 +71,6 @@ Make sure you have configuration file `server_config.json`
 
 # Future plans:
    - **Add message handling**
-   - **Fix logging issues**
    - **Add API to work with ESP32 microcontrollers**
    - **Add a Multi-Platform API** 
 
@@ -80,7 +79,7 @@ Make sure you have configuration file `server_config.json`
 You are welcomed to contribute to this project. To get started:
 
 1. Fork the repository.
-2. Create a new branchLj, for your changes.
+2. Create a new branch, for your changes.
 3. Make your changes and test them.
 4. Submit a pull request with a description of your changes.
 

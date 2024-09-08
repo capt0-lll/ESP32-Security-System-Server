@@ -14,10 +14,10 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
-#include "json_reader.h"
+#include "jsonReader.h"
 
 
-void json_reader::read(std::string &ip, unsigned short &port) {
+void jsonReader::read(std::string &ip, unsigned short &port) {
 
     try {
         boost::property_tree::ptree ptree;

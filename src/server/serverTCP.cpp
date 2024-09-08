@@ -14,31 +14,31 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
-#include <tcp_server.h>
+#include <serverTCP.h>
 
 using boost::asio::ip::tcp;
 
 // FIX:
 // Previous logs can be deleted when server is started.
 
-tcp_server::tcp_server(boost::asio::io_context &io_context, const std::string &ip_address, const unsigned short port)
+serverTCP::serverTCP(boost::asio::io_context &io_context, const std::string &ip_address, const unsigned short port)
         : acceptor(io_context, tcp::endpoint(boost::asio::ip::make_address(ip_address), port)) {
     logger.logMessage(info, "Server started");
-    start_accept();
+    startAccept();
 }
 
-void tcp_server::start_accept() {
+void serverTCP::startAccept() {
     auto socket = std::make_shared<tcp::socket>(acceptor.get_executor());
     acceptor.async_accept(*socket, [this, socket](boost::system::error_code error_code) {
         if (!error_code) {
-            start_read(socket);
+            startRead(socket);
             logger.logMessage(info, "New connection");
         } else logger.logMessage(error, "Error occures: " + error_code.message());
-        start_accept();
+        startAccept();
     });
 }
 
-void tcp_server::start_read(const std::shared_ptr<tcp::socket>& socket) {
+void serverTCP::startRead(const std::shared_ptr<tcp::socket>& socket) {
     auto buffer = std::make_shared<boost::asio::streambuf>();
     async_read_until(*socket, *buffer, "\n",
     [this, socket, buffer](boost::system::error_code error_code, std::size_t bytes_transfered) {

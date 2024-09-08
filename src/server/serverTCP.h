@@ -32,12 +32,12 @@
 
 using boost::asio::ip::tcp;
 
-class tcp_server {
+class serverTCP {
 public:
-    tcp_server(boost::asio::io_context &io_context, const std::string &ip_address, unsigned short port);
+    serverTCP(boost::asio::io_context &io_context, const std::string &ip_address, unsigned short port);
 private:
-    void start_accept();
-    void start_read(const std::shared_ptr<tcp::socket>& socket);
+    void startAccept();
+    void startRead(const std::shared_ptr<tcp::socket>& socket);
     tcp::acceptor acceptor;
     Logger logger;
 

@@ -26,7 +26,7 @@ const std::string json_file = "server_config.json";
 const std::string port_key = "port";
 const std::string ip_key = "ip";
 
-class json_reader {
+class jsonReader {
 public:
     static void read(std::string &ip, unsigned short &port);
 };
