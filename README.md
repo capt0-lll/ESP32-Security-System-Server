@@ -15,7 +15,7 @@ in the same directory as the server executable file
 Here is example of this file
    ```json
       {
-      "ip": "127.0.0.1",
+      "ip": "127.0.0.1", 
       "port": 12345
       }
    ```
@@ -34,7 +34,7 @@ Here is example of this file
 1. Copy this code using git clone
 
    ``` bash
-      git clone
+      git clone https://github.com/capt0-lll/ESP32-Security-System-Server
    ```
 2. Create and enter a build directory for the server
    ```bash
