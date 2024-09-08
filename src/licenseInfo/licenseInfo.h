@@ -14,44 +14,25 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
+#ifndef LICENSEINFO_H
+#define LICENSEINFO_H
 
-#include <tcp_server.h>
-#include <json_reader.h>
-
-
-#include <boost/asio.hpp>
-#include <thread>
 #include <iostream>
-
+#include <thread>
 
 using namespace std;
 
-unsigned short port;
-string ip;
+class licenseInfo {
+public:
+    licenseInfo();
+    static void runReadingInput();
+private:
+    static void showLicense();
+    static void showWarranty();
+    static void showLicenseOnStart();
+
+};
 
 
-int main() {
 
-    json_reader::read(ip,port);
-    try {
-
-
-
-        boost::asio::io_context io_context;
-
-
-        thread showLicense(licenseInfo{}.runReadingInput);
-
-        tcp_server server(io_context, ip, port);
-        thread server_run([&io_context]() {
-            io_context.run();
-        });
-
-        showLicense.join();
-        server_run.join();
-
-    } catch (exception &exception) {
-        cerr << "Error: " << exception.what() << endl;
-    }
-
-}
+#endif //LICENSEINFO_H

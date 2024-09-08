@@ -14,44 +14,26 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
+#include "Logger.h"
 
-#include <tcp_server.h>
-#include <json_reader.h>
+Logger::Logger() {
 
-
-#include <boost/asio.hpp>
-#include <thread>
-#include <iostream>
-
-
-using namespace std;
-
-unsigned short port;
-string ip;
-
-
-int main() {
-
-    json_reader::read(ip,port);
-    try {
-
-
-
-        boost::asio::io_context io_context;
-
-
-        thread showLicense(licenseInfo{}.runReadingInput);
-
-        tcp_server server(io_context, ip, port);
-        thread server_run([&io_context]() {
-            io_context.run();
-        });
-
-        showLicense.join();
-        server_run.join();
-
-    } catch (exception &exception) {
-        cerr << "Error: " << exception.what() << endl;
-    }
-
+    add_common_attributes();
+    add_console_log(std::cout, format = "[%TimeStamp%]: %Message%");
+    add_file_log(
+        file_name = "server_logs/server_log_%N.log",
+        rotation_size = 10 * 1024 * 1024, // Ротація файлу при досягненні 10 МБ
+        format = "[%TimeStamp%]: %Message%\n",
+        open_mode = ios_base::app,
+        auto_flush = true
+    );
+    core::get()->set_filter(trivial::severity >=info);
 }
+
+void Logger::logMessage(severity_level severityLevel, string message) {
+    BOOST_LOG_SEV(logger, severityLevel) << message;
+}
+
+
+
+

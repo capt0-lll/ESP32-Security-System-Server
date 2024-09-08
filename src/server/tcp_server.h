@@ -17,6 +17,8 @@
 #ifndef TCPSERVER_H
 #define TCPSERVER_H
 
+#include <licenseInfo.h>
+
 #include <boost/asio.hpp>
 #include <iostream>
 #include <boost/log/trivial.hpp>
@@ -26,6 +28,7 @@
 #include <boost/log/utility/setup/console.hpp>
 #include <boost/log/utility/setup/common_attributes.hpp>
 
+#include <Logger.h>
 
 using boost::asio::ip::tcp;
 
@@ -34,8 +37,9 @@ public:
     tcp_server(boost::asio::io_context &io_context, const std::string &ip_address, unsigned short port);
 private:
     void start_accept();
-    void start_read(const std::shared_ptr<tcp::socket>& socket) const;
+    void start_read(const std::shared_ptr<tcp::socket>& socket);
     tcp::acceptor acceptor;
+    Logger logger;
 
 };
 

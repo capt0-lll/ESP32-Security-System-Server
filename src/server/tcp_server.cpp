@@ -16,33 +16,14 @@
 */
 #include <tcp_server.h>
 
-
-
 using boost::asio::ip::tcp;
 
 // FIX:
 // Previous logs can be deleted when server is started.
 
-void init_logging() {
-    namespace logging = boost::log;
-    namespace keywords = boost::log::keywords;
-
-    logging::add_common_attributes();
-    logging::add_console_log(std::cout, keywords::format = "[%TimeStamp%]: %Message%");
-    logging::add_file_log(
-        keywords::file_name = "server_logs/server_log_%N.log",
-        keywords::rotation_size = 10 * 1024 * 1024, // Ротація файлу при досягненні 10 МБ
-        keywords::format = "[%TimeStamp%]: %Message%\n",
-        keywords::auto_flush = true
-    );
-    logging::core::get()->set_filter(logging::trivial::severity >= logging::trivial::info);
-}
-
-
 tcp_server::tcp_server(boost::asio::io_context &io_context, const std::string &ip_address, const unsigned short port)
         : acceptor(io_context, tcp::endpoint(boost::asio::ip::make_address(ip_address), port)) {
-    init_logging();
-    BOOST_LOG_TRIVIAL(info) << "Server started";
+    logger.logMessage(info, "Server started");
     start_accept();
 }
 
@@ -50,14 +31,14 @@ void tcp_server::start_accept() {
     auto socket = std::make_shared<tcp::socket>(acceptor.get_executor());
     acceptor.async_accept(*socket, [this, socket](boost::system::error_code error_code) {
         if (!error_code) {
-            BOOST_LOG_TRIVIAL(info) << "New connection";
             start_read(socket);
-        } else BOOST_LOG_TRIVIAL(error) << "Error occured: " << error_code.message();
+            logger.logMessage(info, "New connection");
+        } else logger.logMessage(error, "Error occures: " + error_code.message());
         start_accept();
     });
 }
 
-void tcp_server::start_read(const std::shared_ptr<tcp::socket>& socket) const {
+void tcp_server::start_read(const std::shared_ptr<tcp::socket>& socket) {
     auto buffer = std::make_shared<boost::asio::streambuf>();
     async_read_until(*socket, *buffer, "\n",
     [this, socket, buffer](boost::system::error_code error_code, std::size_t bytes_transfered) {
@@ -67,8 +48,8 @@ void tcp_server::start_read(const std::shared_ptr<tcp::socket>& socket) const {
             std::getline(input_stream, message);
 
             // TO-DO: Make message handler
-            BOOST_LOG_TRIVIAL(info) << "Received message: " << message;
-        } else BOOST_LOG_TRIVIAL(warning) << "Connection closed";
+            logger.logMessage(info, "Received message: " + message);
+        } else logger.logMessage(warning, "Connection closed");
     });
 }
 

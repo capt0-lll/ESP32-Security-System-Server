@@ -14,44 +14,34 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
+#ifndef LOGGER_H
+#define LOGGER_H
 
-#include <tcp_server.h>
-#include <json_reader.h>
-
-
-#include <boost/asio.hpp>
-#include <thread>
 #include <iostream>
+#include <boost/log/trivial.hpp>
+#include <boost/log/core.hpp>
+#include <boost/log/sources/logger.hpp>
+#include <boost/log/utility/setup/file.hpp>
+#include <boost/log/utility/setup/console.hpp>
+#include <boost/log/utility/setup/common_attributes.hpp>
 
 
 using namespace std;
-
-unsigned short port;
-string ip;
-
-
-int main() {
-
-    json_reader::read(ip,port);
-    try {
+using namespace boost::log::trivial;
+using namespace boost::log::sources;
+using namespace boost::log;
+using namespace boost::log::keywords;
 
 
+class Logger {
+public:
+    Logger();
 
-        boost::asio::io_context io_context;
+    void logMessage(severity_level severityLevel, string message);
+
+private:
+    severity_logger<severity_level> logger;
+};
 
 
-        thread showLicense(licenseInfo{}.runReadingInput);
-
-        tcp_server server(io_context, ip, port);
-        thread server_run([&io_context]() {
-            io_context.run();
-        });
-
-        showLicense.join();
-        server_run.join();
-
-    } catch (exception &exception) {
-        cerr << "Error: " << exception.what() << endl;
-    }
-
-}
+#endif //LOGGER_H
