@@ -14,13 +14,13 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
-#include "licenseInfo.h"
+#include "LicenseInfo.h"
 
-licenseInfo::licenseInfo() {
+LicenseInfo::LicenseInfo() {
     showLicenseOnStart();
 }
 
-void licenseInfo::runReadingInput() {
+void LicenseInfo::runReadingInput() {
     while(true) {
         string input;
         getline(cin, input);
@@ -29,7 +29,7 @@ void licenseInfo::runReadingInput() {
     }
 }
 
-void licenseInfo::showLicense() {
+void LicenseInfo::showLicense() {
     std::cout << "This program is free software: you can redistribute it and/or modify" << std::endl;
     std::cout << "it under the terms of the GNU General Public License as published by" << std::endl;
     std::cout << "the Free Software Foundation, either version 3 of the License, or" << std::endl;
@@ -42,7 +42,7 @@ void licenseInfo::showLicense() {
     std::cout << "along with this program. If not, see <https://www.gnu.org/licenses/>." << std::endl;
 }
 
-void licenseInfo::showWarranty() {
+void LicenseInfo::showWarranty() {
     std::cout << "This program comes with ABSOLUTELY NO WARRANTY; for details type `show w`." << std::endl;
     std::cout << "This is free software; you can redistribute it and/or modify" << std::endl;
     std::cout << "it under the terms of the GNU General Public License as published by" << std::endl;
@@ -50,7 +50,7 @@ void licenseInfo::showWarranty() {
 }
 
 
-void licenseInfo::showLicenseOnStart() {
+void LicenseInfo::showLicenseOnStart() {
     std::cout << "ESP32 Security System Server Copyright (C) 2024 Eldar Vanin" << std::endl;
     std::cout << "This program comes with ABSOLUTELY NO WARRANTY; for details type `show w`." << std::endl;
     std::cout << "This is free software, and you are welcome to redistribute it" << std::endl;

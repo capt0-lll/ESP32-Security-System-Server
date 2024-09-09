@@ -14,23 +14,18 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
-
-#ifndef JSON_READER_H
-#define JSON_READER_H
-
-#include <iostream>
-#include <boost/property_tree/json_parser.hpp>
-
-// Change file location to your server configuration file
-const std::string json_file = "server_config.json";
-const std::string port_key = "port";
-const std::string ip_key = "ip";
-
-class jsonReader {
-public:
-    static void read(std::string &ip, unsigned short &port);
-};
+#include "ReaderJSON.h"
 
 
+void ReaderJSON::read(std::string &ip, unsigned short &port) {
 
-#endif //JSON_READER_H
+    try {
+        boost::property_tree::ptree ptree;
+        read_json(json_file, ptree);
+        ip = ptree.get<std::string>("ip");
+        port = std::stoi (ptree.get<std::string>("port"));
+    } catch (std::exception &exception) {
+        std::cerr << "Error: " << exception.what() << std::endl;
+    }
+
+}

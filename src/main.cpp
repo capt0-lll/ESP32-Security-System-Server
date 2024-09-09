@@ -15,8 +15,8 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-#include <serverTCP.h>
-#include <jsonReader.h>
+#include <ServerTCP.h>
+#include <ReaderJSON.h>
 
 
 #include <boost/asio.hpp>
@@ -32,7 +32,7 @@ string ip;
 
 int main() {
 
-    jsonReader::read(ip,port);
+    ReaderJSON::read(ip,port);
     try {
 
 
@@ -40,9 +40,9 @@ int main() {
         boost::asio::io_context io_context;
 
 
-        thread showLicense(licenseInfo{}.runReadingInput);
+        thread showLicense(LicenseInfo{}.runReadingInput);
 
-        serverTCP server(io_context, ip, port);
+        ServerTCP server(io_context, ip, port);
         thread server_run([&io_context]() {
             io_context.run();
         });

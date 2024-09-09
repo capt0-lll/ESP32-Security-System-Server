@@ -14,18 +14,25 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
-#include "jsonReader.h"
+#ifndef LICENSEINFO_H
+#define LICENSEINFO_H
+
+#include <iostream>
+#include <thread>
+
+using namespace std;
+
+class LicenseInfo {
+public:
+    LicenseInfo();
+    static void runReadingInput();
+private:
+    static void showLicense();
+    static void showWarranty();
+    static void showLicenseOnStart();
+
+};
 
 
-void jsonReader::read(std::string &ip, unsigned short &port) {
 
-    try {
-        boost::property_tree::ptree ptree;
-        read_json(json_file, ptree);
-        ip = ptree.get<std::string>("ip");
-        port = std::stoi (ptree.get<std::string>("port"));
-    } catch (std::exception &exception) {
-        std::cerr << "Error: " << exception.what() << std::endl;
-    }
-
-}
+#endif //LICENSEINFO_H

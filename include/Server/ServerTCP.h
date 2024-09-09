@@ -17,7 +17,7 @@
 #ifndef TCPSERVER_H
 #define TCPSERVER_H
 
-#include <licenseInfo.h>
+#include <LicenseInfo.h>
 
 #include <boost/asio.hpp>
 #include <iostream>
@@ -32,15 +32,18 @@
 
 using boost::asio::ip::tcp;
 
-class serverTCP {
+class ServerTCP {
 public:
-    serverTCP(boost::asio::io_context &io_context, const std::string &ip_address, unsigned short port);
+    ServerTCP(boost::asio::io_context &io_context, const std::string &ip_address, unsigned short port);
+
 private:
     void startAccept();
-    void startRead(const std::shared_ptr<tcp::socket>& socket);
+    void startRead(const std::shared_ptr<tcp::socket> &socket);
+    void respond();
+    void writeResponce(const std::shared_ptr<tcp::socket> &socket, string &message);
+
     tcp::acceptor acceptor;
     Logger logger;
-
 };
 
 #endif //TCPSERVER_H

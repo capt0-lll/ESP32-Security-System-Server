@@ -14,25 +14,23 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
-#ifndef LICENSEINFO_H
-#define LICENSEINFO_H
+
+#ifndef JSON_READER_H
+#define JSON_READER_H
 
 #include <iostream>
-#include <thread>
+#include <boost/property_tree/json_parser.hpp>
 
-using namespace std;
+// Change file location to your server configuration file
+const std::string json_file = "server_config.json";
+const std::string port_key = "port";
+const std::string ip_key = "ip";
 
-class licenseInfo {
+class ReaderJSON {
 public:
-    licenseInfo();
-    static void runReadingInput();
-private:
-    static void showLicense();
-    static void showWarranty();
-    static void showLicenseOnStart();
-
+    static void read(std::string &ip, unsigned short &port);
 };
 
 
 
-#endif //LICENSEINFO_H
+#endif //JSON_READER_H
