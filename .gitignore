@@ -1,6 +1,6 @@
 /server_logs/
 /build/
-/CMakeFiles
+/CMakeFiles/
 *.log
 *.json
 .idea
