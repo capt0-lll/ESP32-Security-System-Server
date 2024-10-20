@@ -1,0 +1,8 @@
+/media/eldar/30CAF0B4CAF07804/projects/security_system/ESP32-Security-System-Server/CMakeFiles/esp32_security_system_server.dir
+/media/eldar/30CAF0B4CAF07804/projects/security_system/ESP32-Security-System-Server/CMakeFiles/test.dir
+/media/eldar/30CAF0B4CAF07804/projects/security_system/ESP32-Security-System-Server/CMakeFiles/edit_cache.dir
+/media/eldar/30CAF0B4CAF07804/projects/security_system/ESP32-Security-System-Server/CMakeFiles/rebuild_cache.dir
+/media/eldar/30CAF0B4CAF07804/projects/security_system/ESP32-Security-System-Server/CMakeFiles/list_install_components.dir
+/media/eldar/30CAF0B4CAF07804/projects/security_system/ESP32-Security-System-Server/CMakeFiles/install.dir
+/media/eldar/30CAF0B4CAF07804/projects/security_system/ESP32-Security-System-Server/CMakeFiles/install/local.dir
+/media/eldar/30CAF0B4CAF07804/projects/security_system/ESP32-Security-System-Server/CMakeFiles/install/strip.dir

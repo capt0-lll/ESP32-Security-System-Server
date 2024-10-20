@@ -45,8 +45,12 @@ void ServerTCP::startRead(const std::shared_ptr<tcp::socket>& socket) {
             std::istream input_stream(buffer.get());
             std::string request;
             std::getline(input_stream, request);
+            // TODO: Make message handler
+            if(request == "Hello there") {
+                string responce = "General Kenobi\n";
+                write(*socket, boost::asio::buffer(responce));
+            }
 
-            // TO-DO: Make message handler
             logger.logMessage(info, "Received request: " + request);
         } else logger.logMessage(warning, "Connection closed");
     });
