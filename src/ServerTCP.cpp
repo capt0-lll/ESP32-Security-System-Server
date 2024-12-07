@@ -20,44 +20,44 @@ using boost::asio::ip::tcp;
 
 // FIX:
 // Previous logs can be deleted when server is started.
-ServerTCP::ServerTCP(boost::asio::io_context &io_context, const std::string &ip_address, const unsigned short port)
-        : acceptor(io_context, tcp::endpoint(boost::asio::ip::make_address(ip_address), port)) {
-    logger.logMessage(info, "Server started");
-    startAccept();
+ServerTCP::ServerTCP(boost::asio::io_context &io_context,
+                     const std::string &ip_address, const unsigned short port)
+    : acceptor(io_context,
+               tcp::endpoint(boost::asio::ip::make_address(ip_address), port)) {
+  logger.logMessage(info, "Server started");
+  startAccept();
 }
 
 void ServerTCP::startAccept() {
-    auto socket = std::make_shared<tcp::socket>(acceptor.get_executor());
-    acceptor.async_accept(*socket, [this, socket](boost::system::error_code error_code) {
+  auto socket = std::make_shared<tcp::socket>(acceptor.get_executor());
+  acceptor.async_accept(
+      *socket, [this, socket](boost::system::error_code error_code) {
         if (!error_code) {
-            startRead(socket);
-            logger.logMessage(info, "New connection");
-        } else logger.logMessage(error, "Error occures: " + error_code.message());
+          startRead(socket);
+          logger.logMessage(info, "New connection");
+        } else
+          logger.logMessage(error, "Error occures: " + error_code.message());
         startAccept();
-    });
+      });
 }
 
-void ServerTCP::startRead(const std::shared_ptr<tcp::socket>& socket) {
-    auto buffer = std::make_shared<boost::asio::streambuf>();
-    async_read_until(*socket, *buffer, "\n",
-    [this, socket, buffer](boost::system::error_code error_code, std::size_t bytes_transfered) {
-        if(!error_code) {
-            std::istream input_stream(buffer.get());
-            std::string request;
-            std::getline(input_stream, request);
-            // TODO: Make message handler
-            if(request == "Hello there") {
-                string responce = "General Kenobi\n";
-                write(*socket, boost::asio::buffer(responce));
-            }
-
-            logger.logMessage(info, "Received request: " + request);
-        } else logger.logMessage(warning, "Connection closed");
-    });
+void ServerTCP::startRead(const std::shared_ptr<tcp::socket> &socket) {
+  auto buffer = std::make_shared<boost::asio::streambuf>();
+  async_read_until(
+      *socket, *buffer, "\n",
+      [this, socket, buffer](boost::system::error_code error_code,
+                             std::size_t bytes_transfered) {
+        if (!error_code) {
+          std::istream input_stream(buffer.get());
+          std::string request;
+          std::getline(input_stream, request);
+          write(*socket,
+                boost::asio::buffer(MessageHandler::handleMessage(request)));
+          logger.logMessage(info, "Received request: " + request);
+        } else
+          logger.logMessage(warning, "Connection closed");
+      });
 }
 
-void ServerTCP::writeResponce(const std::shared_ptr<tcp::socket> &socket, string &message) {
-
-}
-
-
+void ServerTCP::writeResponce(const std::shared_ptr<tcp::socket> &socket,
+                              string &message) {}

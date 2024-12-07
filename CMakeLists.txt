@@ -8,10 +8,12 @@ set(PROJECT_FILES
         src/ServerTCP.cpp
         src/Logger.cpp
         src/LicenseInfo.cpp
+        src/MessageHandler.cpp
         include/LicenseInfo.h
         include/Logger.h
         include/ServerTCP.h
         include/ReaderJSON.h
+        include/MessageHandler.h
         src/main.cpp
 )
 

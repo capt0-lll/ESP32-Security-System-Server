@@ -15,43 +15,34 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-#include <ServerTCP.h>
 #include <ReaderJSON.h>
-
+#include <ServerTCP.h>
 
 #include <boost/asio.hpp>
-#include <thread>
 #include <iostream>
-
+#include <thread>
 
 using namespace std;
 
 unsigned short port;
 string ip;
 
-
 int main() {
 
-    ReaderJSON::read(ip,port);
-    try {
+  ReaderJSON::read(ip, port);
+  try {
 
+    boost::asio::io_context io_context;
 
+    thread showLicense(LicenseInfo{}.runReadingInput);
 
-        boost::asio::io_context io_context;
+    ServerTCP server(io_context, ip, port);
+    thread server_run([&io_context]() { io_context.run(); });
 
+    showLicense.join();
+    server_run.join();
 
-        thread showLicense(LicenseInfo{}.runReadingInput);
-
-        ServerTCP server(io_context, ip, port);
-        thread server_run([&io_context]() {
-            io_context.run();
-        });
-
-        showLicense.join();
-        server_run.join();
-
-    } catch (exception &exception) {
-        cerr << "Error: " << exception.what() << endl;
-    }
-
+  } catch (exception &exception) {
+    cerr << "Error: " << exception.what() << endl;
+  }
 }

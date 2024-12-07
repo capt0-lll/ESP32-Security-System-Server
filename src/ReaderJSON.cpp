@@ -16,16 +16,14 @@
 */
 #include "ReaderJSON.h"
 
-
 void ReaderJSON::read(std::string &ip, unsigned short &port) {
 
-    try {
-        boost::property_tree::ptree ptree;
-        read_json(json_file, ptree);
-        ip = ptree.get<std::string>("ip");
-        port = std::stoi (ptree.get<std::string>("port"));
-    } catch (std::exception &exception) {
-        std::cerr << "Error: " << exception.what() << std::endl;
-    }
-
+  try {
+    boost::property_tree::ptree ptree;
+    read_json(json_file, ptree);
+    ip = ptree.get<std::string>("ip");
+    port = std::stoi(ptree.get<std::string>("port"));
+  } catch (std::exception &exception) {
+    std::cerr << "Error: " << exception.what() << std::endl;
+  }
 }

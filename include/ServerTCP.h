@@ -18,32 +18,34 @@
 #define TCPSERVER_H
 
 #include <LicenseInfo.h>
+#include <Logger.h>
+#include <MessageHandler.h>
 
 #include <boost/asio.hpp>
-#include <iostream>
-#include <boost/log/trivial.hpp>
 #include <boost/log/core.hpp>
 #include <boost/log/sources/logger.hpp>
-#include <boost/log/utility/setup/file.hpp>
-#include <boost/log/utility/setup/console.hpp>
+#include <boost/log/trivial.hpp>
 #include <boost/log/utility/setup/common_attributes.hpp>
-
-#include <Logger.h>
+#include <boost/log/utility/setup/console.hpp>
+#include <boost/log/utility/setup/file.hpp>
+#include <iostream>
 
 using boost::asio::ip::tcp;
 
 class ServerTCP {
 public:
-    ServerTCP(boost::asio::io_context &io_context, const std::string &ip_address, unsigned short port);
+  ServerTCP(boost::asio::io_context &io_context, const std::string &ip_address,
+            unsigned short port);
 
 private:
-    void startAccept();
-    void startRead(const std::shared_ptr<tcp::socket> &socket);
-    void respond();
-    void writeResponce(const std::shared_ptr<tcp::socket> &socket, string &message);
+  void startAccept();
+  void startRead(const std::shared_ptr<tcp::socket> &socket);
+  void respond();
+  void writeResponce(const std::shared_ptr<tcp::socket> &socket,
+                     string &message);
 
-    tcp::acceptor acceptor;
-    Logger logger;
+  tcp::acceptor acceptor;
+  Logger logger;
 };
 
-#endif //TCPSERVER_H
+#endif // TCPSERVER_H
